@@ -1,0 +1,41 @@
+<ion-content class="bg-light" *ngIf="isLog">
+  <ion-row justify-content-center align-items-center>
+    <ion-col col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4>
+
+      <ion-card>
+
+        <!-- Image -->
+        <img src="assets/bg_logo.png"/>  
+
+        <!-- Content -->
+        <ion-card-content>
+
+          <!-- Title -->
+          <ion-card-title>Se connecter</ion-card-title>
+
+          <!-- Login form -->
+          <form #loginForm="ngForm" (ngSubmit)="login()" autocomplete="off">
+
+            <ion-list inset>
+
+              <ion-item>
+                <ion-input placeholder="Email" name="username" type="email" required [(ngModel)]="username" #email></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-input placeholder="Mot de passe" name="password" type="password" required [(ngModel)]="password"></ion-input>
+              </ion-item>
+
+            </ion-list>
+
+            <ion-button class="submit-btn" color="primary" full type="submit" [disabled]="!loginForm.form.valid" margin-top>Se connecter</ion-button>
+
+          </form>
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
+</ion-content>
+

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      BioBelt Tools
+    </ion-title>
+  </ion-toolbar>
+
+  <ion-row no-padding>
+    <ion-col class="upc-state-connected" no-padding text-center *ngIf="connected">
+      <ion-label><b>UPC connected</b></ion-label>
+    </ion-col>
+    <ion-col class="upc-state-disconnected" no-padding text-center *ngIf="!connected">
+      <ion-label><b>UPC disconnected</b></ion-label>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content color="light">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>UPC-V3 Tools</ion-label>
+    </ion-list-header>
+
+    <!-- Instruction -->
+    <ion-item *ngIf="!connected" text-wrap>
+      <ion-label>Connect to <strong>BBAM</strong> WiFi with <strong>BioBeltService</strong> password</ion-label>
+    </ion-item>
+
+    <!-- Flash -->
+    <ion-item (click)="flash()" *ngIf="connected">
+      <ion-icon slot="start" name="code-download"></ion-icon>
+      <ion-label>Flash Firmware</ion-label>
+    </ion-item>
+
+    <!-- Download -->
+    <ion-item (click)="download()" *ngIf="connected">
+      <ion-icon slot="start" name="download"></ion-icon>
+      <ion-label>Download Data</ion-label>
+    </ion-item>
+
+    <!-- Reset -->
+    <ion-item (click)="reset()" *ngIf="connected">
+      <ion-icon slot="start" name="power"></ion-icon>
+      <ion-label>Reset</ion-label>
+    </ion-item>
+
+    <!-- Wipe -->
+    <ion-item (click)="wipe()" *ngIf="connected">
+      <ion-icon slot="start" name="alert"></ion-icon>
+      <ion-label>Wipe</ion-label>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

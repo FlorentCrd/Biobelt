@@ -1,0 +1,7 @@
+{
+  "name": "biobelt-tools",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
