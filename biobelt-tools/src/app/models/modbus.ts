@@ -776,7 +776,8 @@ export class ModbusClient extends StateMachine {
     }.bind(this));
   }
   setFloatInHoldingRegister(start, value) {
-    var data = this.floatToRegister(value);
+    var data : any[] = this.floatToRegister(value);
+    alert(data);
     return this.writeMultipleRegisters(start, data);
   }
   registerToFloat(registers) {
@@ -842,7 +843,7 @@ export class ModbusClient extends StateMachine {
     view.setUint8(1, lowRegisterBytes[1]);
     lowRegister = view.getUint16(0);
     
-    return [lowRegister, highRegister];
+    return new Array(lowRegister, highRegister);
   }
 
   /* Integer */
