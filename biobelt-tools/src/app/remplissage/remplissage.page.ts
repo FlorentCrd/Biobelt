@@ -44,10 +44,15 @@ export class RemplissagePage implements OnInit {
 
   refill() {
     //alert(this.upc.client.floatToRegister(this.refillRealAdded/0.001974));
-    if (this.refillReserve === "B1")
+   
+    if (this.refillReserve === "1"){
       this.upc.client.setFloatInHoldingRegister(40157,this.refillRealAdded/0.001974);
-    if(this.refillReserve === "B2")
+      alert("Remplissage sur B1 effectué !")
+    }
+    if(this.refillReserve === "2"){
       this.upc.client.setFloatInHoldingRegister(40165,this.refillRealAdded/0.001974); 
+      alert("Remplissage sur B2 effectué !");
+    }
     //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60)); 
   }
 

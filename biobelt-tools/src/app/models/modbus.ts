@@ -777,7 +777,6 @@ export class ModbusClient extends StateMachine {
   }
   setFloatInHoldingRegister(start, value) {
     var data : any[] = this.floatToRegister(value);
-    alert(data);
     return this.writeMultipleRegisters(start, data);
   }
   registerToFloat(registers) {

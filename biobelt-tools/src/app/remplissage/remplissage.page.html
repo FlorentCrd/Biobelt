@@ -14,13 +14,13 @@
           <!-- Intervetion datetime -->
           <dd class="col-md-6 mb-0">Date de l'intervention</dd>
           <dt class="col-md-6 mb-2 text-md-right">
-            <ion-datetime class="form-control form-control-sm d-inline-block" [disabled]="isSync" [(ngModel)]="refillInterventionDatetime" (ngModelChange)="totalConsumedCalculation()"></ion-datetime>
+            <ion-datetime class="form-control form-control-sm d-inline-block" [(ngModel)]="refillInterventionDatetime"></ion-datetime>
           </dt>
 
           <!-- Selected Reserve -->
           <dd class="col-md-6 mb-0">Réserve concernée</dd>
           <dt class="col-md-6 mb-2 text-md-right">
-            <select class="custom-select custom-select-sm" placeholder="Sélectionnez la réserve" [(ngModel)]="refillReserve" (ngModelChange)="totalConsumedCalculation()" [disabled]="isSync">
+            <select class="custom-select custom-select-sm" placeholder="Sélectionnez la réserve" [(ngModel)]="refillReserve">
               <option value="1">B1</option>
               <option value="2">B2</option>
             </select>
@@ -35,24 +35,24 @@
           <!-- Added content -->
           <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
           <dt class="col-md-6 mb-2 text-md-right">
-            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded" placeholder="Entrez le total" [disabled]="isSync">
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded" placeholder="Entrez le total">
           </dt>
 
           <!-- All bottles replaced -->
           <dd class="col-md-6 mb-0">Remplacement de toute la réserve</dd>
           <dt class="col-md-6 mb-2 text-md-right">
-            <ion-toggle size="small" [disabled]="isSync" [(ngModel)]="refillReplaceAll" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded"></ion-toggle>
+            <ion-toggle size="small"  [(ngModel)]="refillReplaceAll" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded"></ion-toggle>
           </dt>
 
           <!-- Real content -->
           <dd class="col-md-6 mb-0">Réel ajouté [kg]</dd>
           <dt class="col-md-6 mb-2 text-md-right">
-            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillRealAdded" placeholder="Entrez le total" [disabled]="isSync">
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillRealAdded" placeholder="Entrez le total">
           </dt>
 
           <!-- Button -->
           <div class="col-12">
-            <button type="button" class="btn btn-success btn-sm" [disabled]="isSync || refillFormInvalid" (click)="refill()">Remplir</button>
+            <button type="button" class="btn btn-success btn-sm" (click)="refill()">Remplir</button>
           </div>
 
         </dl>
