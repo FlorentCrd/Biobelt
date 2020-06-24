@@ -8,6 +8,7 @@ import { UPC } from '../models/upc';
   selector: 'app-remplissage',
   templateUrl: './remplissage.page.html',
   styleUrls: ['./remplissage.page.scss'],
+  
 })
 export class RemplissagePage implements OnInit {
   refillInterventionDatetime:string;
