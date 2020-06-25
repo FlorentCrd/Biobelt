@@ -225,7 +225,7 @@ export class BouteillePage implements OnInit {
         this.global.B2 = [];
         this.global.designationB1 = [];
         this.global.designationB2 = [];
-        this.router.navigate(["removebottle"]);
+        this.router.navigate(["remplissage"]);
       }
       else {
         alert('Erreur lors du rajout de la bouteille !');
