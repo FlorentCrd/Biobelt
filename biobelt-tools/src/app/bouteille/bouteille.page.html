@@ -36,14 +36,11 @@
           </ion-item>
           <div *ngFor="let b1 of global.B1;let i = index;">
           <ion-item  *ngIf="global.B1.length > 0">
-            <ion-label>{{b1.designation === 0 ? b1.marque: b1.marque+" "+b1.designation.toFixed()+" kg"}}</ion-label>
-            <ion-select placeholder="Designation (en kg)" *ngIf="b1.marque === 'Air liquide'" (ionChange)="setDesignationB1(i,$event);">
-              <ion-select-option value="10">10 kg</ion-select-option>
-              <ion-select-option value="20">20 kg</ion-select-option>
-              <ion-select-option value="22.6796">22,68 kg</ion-select-option>
-              <ion-select-option value="34">34 kg</ion-select-option>
-              
-            </ion-select>
+            <!-- Added content -->
+          <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
+          <dt class="col-md-6 mb-2 text-md-right">
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded" placeholder="Entrez le total">
+          </dt>
             
             <!--<ion-badge color="primary" slot="end">{{'x'+b1.qty}}</ion-badge>-->
           </ion-item>
