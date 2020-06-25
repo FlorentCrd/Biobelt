@@ -3,6 +3,7 @@ import { AlertController, Platform, LoadingController } from '@ionic/angular';
 import { Network } from '@ionic-native/network';
 import { Http } from '@angular/http';
 import { UPC } from '../models/upc';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-remplissage',
@@ -18,6 +19,7 @@ export class RemplissagePage implements OnInit {
   refillReplaceAll: boolean;
   refillRealAdded:number;
   start9:string;
+  router:Router;
   private upc: UPC;
 
   constructor(private platform: Platform, private ngZone: NgZone) { }
@@ -54,7 +56,9 @@ export class RemplissagePage implements OnInit {
       this.upc.client.setFloatInHoldingRegister(40165,this.refillRealAdded/0.001974); 
       alert("Remplissage sur B2 effectué !");
     }
-    //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60)); 
+    //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60));
+    this.router.navigate(["move-bouteille"]); 
   }
+      
 
 }

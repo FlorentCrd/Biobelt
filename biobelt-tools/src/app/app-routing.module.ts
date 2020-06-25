@@ -8,6 +8,8 @@ const routes: Routes = [
   { path: 'remplissage', loadChildren: './remplissage/remplissage.module#RemplissagePageModule' },
   { path: 'programmes', loadChildren: './programmes/programmes.module#ProgrammesPageModule' },
   { path: 'bouteille', loadChildren: './bouteille/bouteille.module#BouteillePageModule' },
+  { path: 'move-bouteille', loadChildren: './move-bouteille/move-bouteille.module#MoveBouteillePageModule' },
+  
 ];
 
 @NgModule({

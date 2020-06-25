@@ -60,11 +60,13 @@ export class LoginPage implements OnInit {
           loading.dismiss();
 
           let toast = await this.toastCtrl.create({
-            message: 'Impossible de se connecter à internet !',
+            message: 'Version non connecté !',
             duration: 3000,
             position: 'top'
           });
+          
           toast.present()
+          this.navCtrl.navigateRoot('home');
         })
       }
       else {
@@ -115,7 +117,7 @@ export class LoginPage implements OnInit {
         async err => {
           // Hide loading
           loading.dismiss();
-
+          alert(JSON.stringify(err));
           let toast = await this.toastCtrl.create({
             message: 'Impossible de se connecter à internet !',
             duration: 3000,

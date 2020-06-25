@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Upcv3serviceService} from '../api/upcv3service.service';
-import { Storage } from '@ionic/storage';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-
 import {GlobalService} from '../api/global.service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Site } from '../models/site';
 import { Code } from '../api/ApiResponse';
-import { Router } from '@angular/router';
+import {Upcv3serviceService} from '../api/upcv3service.service';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
-  selector: 'app-bouteille',
-  templateUrl: './bouteille.page.html',
-  styleUrls: ['./bouteille.page.scss'],
+  selector: 'app-move-bouteille',
+  templateUrl: './move-bouteille.page.html',
+  styleUrls: ['./move-bouteille.page.scss'],
 })
-export class BouteillePage implements OnInit {
+export class MoveBouteillePage implements OnInit {
   token:string;
   listBottles:any;
   sites:Site;
@@ -28,11 +26,11 @@ export class BouteillePage implements OnInit {
     stock: '',
     date: new Date().toISOString().substring(0, 10)
   }
+
   constructor(private upc3service:Upcv3serviceService,
               private storage:Storage,
               private global:GlobalService,
-              private barcode:BarcodeScanner,
-              private router:Router) { }
+              private barcode:BarcodeScanner) { }
 
   async ngOnInit() {
     await this.storage.get('token').then(val => this.token = val);
@@ -47,11 +45,11 @@ export class BouteillePage implements OnInit {
           res.result.forEach(json=> {
             if (json.name === this.global.upc3.upcNameId){
               this.sites = json;
-              alert(JSON.stringify(json));
+              
               this.bottle.name = json.name;
-              if (json.stockClient !== null){
-                this.bottle.stock = json.stockClient;
-                alert(json.stockClient);
+              if (json.stock !== null){
+                this.bottle.stock = json.stock.id;
+                //alert(json.stock.id);
               }
             }
           })
@@ -61,7 +59,6 @@ export class BouteillePage implements OnInit {
           break;
       }
     })
-    
   }
   onScanBarCodeB1(){
     this.barcode.scan().then(res =>{
@@ -161,13 +158,11 @@ export class BouteillePage implements OnInit {
   setDesignationB1(i,$event){
     
     this.global.designationB1[i] = $event.target.value;
-    
     //this.global.B1[i].designation = this.global.B1[i].designation;
      
   }
   setDesignationB2(i,$event){
     this.global.designationB2[i] = $event.target.value;
-    
     //this.global.B2[i].designation = this.global.B2[i].designation;
   }
   deleteB1() {
@@ -217,28 +212,14 @@ export class BouteillePage implements OnInit {
       this.bottle.designation.push(item);
     })
     this.addBottleId();
-    
-    this.upc3service.addToStock(this.bottle,this.token).subscribe(res=>{
+    this.upc3service.addToDeStock(this.bottle,this.token).subscribe(res=>{
       if (res.code === Code.BOTTLE_CREATED){
-        alert('Bouteille ajouté à la ceinture !');
-        this.global.B1 = [];
-        this.global.B2 = [];
-        this.global.designationB1 = [];
-        this.global.designationB2 = [];
-        this.router.navigate(["remplissage"]);
+        alert('Bouteille ajouté au stock !');
       }
       else {
-        alert('Erreur lors du rajout de la bouteille !');
+        alert('Erreur lors du rajout de la bouteille au stock !');
       }
     })
 
   }
-  onContinue(){
-    this.global.B1 = [];
-        this.global.B2 = [];
-        this.global.designationB1 = [];
-        this.global.designationB2 = [];
-        this.router.navigate(["move-bouteille"]);
-  }
 }
-

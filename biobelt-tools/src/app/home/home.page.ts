@@ -3,6 +3,7 @@ import { AlertController, Platform, LoadingController } from '@ionic/angular';
 import { Http } from '@angular/http';
 import { Network } from '@ionic-native/network';
 import { EmailComposer } from '@ionic-native/email-composer/ngx';
+import { Router } from '@angular/router';
 
 import { UPC } from '../models/upc';
 

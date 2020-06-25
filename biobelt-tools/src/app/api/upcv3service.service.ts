@@ -38,7 +38,7 @@ export class Upcv3serviceService {
           var upcv3: UPCV3[] = [];
           var i = 0;
           res.result.forEach(jsonUPCV3 =>{if(UPCV3.loadFromJSON(jsonUPCV3).upcStatusString === 'DIS'){ upcv3.push(UPCV3.loadFromJSON(jsonUPCV3)); } });
-          res.result = upcv3;
+          //res.result = upcv3;
           break;
 
           case Code.UNAUTHORIZED:
@@ -53,6 +53,7 @@ export class Upcv3serviceService {
   }
  
   public login(user:User) : Observable<AuthResponse>{
+    //this.apiUrl = "http://localhost:8080/";
     return this.http.post<AuthResponse>(this.apiUrl+'user/login',user).pipe(map(
       res =>{
         switch (res.code){
@@ -141,7 +142,7 @@ export class Upcv3serviceService {
       switch (res.code) {
 
         case Code.BOTTLE_CREATED:
-        alert('Bouteilles ajoutés au stocks !');  
+        alert('Bouteilles ajoutés au stocks client !');  
         break;
 
         case Code.INTERNAL_ERROR:
@@ -194,7 +195,7 @@ export class Upcv3serviceService {
     let headers = new HttpHeaders().set('Content-Type','application/json')
     .set('authorization','Bearer '+token);
 
-    return this.http.get<ApiResponse<Version>>(this.apiUrl+'project/'+id+'/versions',{headers:headers}).pipe(map(res=>{
+    return this.http.get<ApiResponse<Version>>(this.apiUrl+'project/install/'+id,{headers:headers}).pipe(map(res=>{
       switch(res.code){
         case Code.VERSION_RECOVERED :
           break;
@@ -215,9 +216,9 @@ export class Upcv3serviceService {
     let headers = new HttpHeaders().set('Content-Type','application/json')
     .set('authorization','Bearer '+token);
 
-    return this.http.post<ApiResponse<any>>(this.apiUrl+"bottle/addToStock",json,{headers:headers}).pipe(map(res=>{
+    return this.http.post<ApiResponse<any>>(this.apiUrl+"bottle/deleteFromStockClient",json,{headers:headers}).pipe(map(res=>{
       switch(res.code){
-        case Code.BOTTLE_CREATED :
+        case Code.BOTTLE_DELETED :
           alert("Bouteilles ajoutés au stock !");
           break;
         case Code.BOTTLE_ALREADY_EXSIST :
@@ -239,6 +240,74 @@ export class Upcv3serviceService {
       return res;
     }))
   }
+
+  public syncBelts(version,token){
+    let headers = new HttpHeaders().set('Content-Type','application/json')
+    .set('authorization','Bearer '+token);
+
+    return this.http.post<ApiResponse<Version>>(this.apiUrl + 'version/' + version.id + '/sync', version,{headers:headers}).pipe(map(
+      res => {
+        switch (res.code) {
+
+          case Code.VERSION_SYNCHRONIZED:
+          res.result = Version.loadFromJSON(res.result);
+          alert("Synchronisation réussi !")
+          break;
+
+          case Code.VERSION_DOESNT_EXSIST:
+          alert("Problème Version déjà existante !");
+          break;
+
+          case Code.UNAUTHORIZED:
+          alert("Vous n'êtes pas autorisé à utiliser l'application mobile !") 
+          break;
+
+        }
+
+        return res;
+      }
+    ))
+  }
+ 
   
+  public getSiteByUuid(id,token){
+    let headers = new HttpHeaders().set('Content-Type','application/json')
+    .set('authorization','Bearer '+token);
+
+    return this.http.get<ApiResponse<Site>>(this.apiUrl+"upcv3/getSiteByUpcID/"+id,{headers:headers}).pipe(map(
+      res=>{
+        switch (res.code){
+          case Code.SITE_RECOVERED :
+            res.result = Site.loadFromJSON(res.result);
+            break;
+          case Code.UPCV3_DOESNT_EXSIST :
+            alert("Le Site n'existe pas dans la base de données");
+            break;
+          case Code.UNAUTHORIZED :
+            alert("Vous n'êtes pas autorisé à utiliser l'application mobile !");
+            break;    
+        }
+        return res;
+      }
+    ))
+  }
+  public getExcelSheet(id,token){
+    let headers = new HttpHeaders()
+    .set('authorization','Bearer '+token)
+    .set('accept', 'application/pdf');
+    
+    return this.http.get(this.apiUrl+"upcv3/intervention/"+id+"/interventionSheet",{headers:headers,responseType : 'arraybuffer'});
+  }
+  public signInterSheets(id,sign,token) :any {
+    let headers = new HttpHeaders()
+    .set('authorization','Bearer '+token)
+    .set('accept', 'application/pdf');
+    //this.apiUrl = "http://localhost:8080/";
+    sign = sign.replace("data:image/png;base64,","");
+    sign = encodeURI(sign);
+    alert(sign);
+    console.log(sign);
+    return this.http.post(this.apiUrl+"upcv3/intervention/"+id+"/signedInterventionSheet?signature="+sign,{},{headers:headers,responseType : 'arraybuffer'});
+  }
 
 }
