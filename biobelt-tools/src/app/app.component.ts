@@ -22,8 +22,8 @@ export class AppComponent {
     },
     
     {
-      title: 'Accueil',
-      url: '/Accueil',
+      title: 'bouteille',
+      url: '/bouteille',
       icon: 'home'
     },
     {
