@@ -13,7 +13,7 @@ export class AppComponent {
     {
       title: 'firmware',
       url: '/home',
-      icon: 'home'
+      icon: 'cloud-download'
     },
     {
       title: 'remplissage ',
@@ -22,12 +22,14 @@ export class AppComponent {
     },
     
     {
-      title: 'Remise en Service',
-      icon:'sunny'
+      title: 'Accueil',
+      url: '/Accueil',
+      icon: 'home'
     },
     {
-      title:'Hivernage',
-      icon : 'snow'
+      title:'programmes',
+      url: '/programmes',
+      icon : 'clock'
     }
   ];
 
