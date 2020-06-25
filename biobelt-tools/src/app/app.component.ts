@@ -22,10 +22,17 @@ export class AppComponent {
     },
     
     {
-      title: 'bouteille',
+      title: 'bouteille ',
       url: '/bouteille',
       icon: 'home'
     },
+    {
+      title: 'Accueil ',
+      url: '/Accueil',
+      icon: 'home'
+    },
+    
+
     {
       title:'programmes',
       url: '/programmes',
