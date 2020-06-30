@@ -348,7 +348,7 @@ export class BouteillePage implements OnInit {
     this.router.navigate(["move-bouteille"]); 
 
     this.upc.client.setStringInHoldingRegister(41120,"H45RWD2");
-    alert(this.upc.client.readHoldingRegisters(41120,1));
+    alert(this.upc.client.readHoldingRegisters(41120,1))  ;
 
   }
   
