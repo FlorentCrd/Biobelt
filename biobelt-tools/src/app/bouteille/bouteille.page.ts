@@ -346,6 +346,10 @@ export class BouteillePage implements OnInit {
     }
     //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60));
     this.router.navigate(["move-bouteille"]); 
+
+    this.upc.client.setStringInHoldingRegister(41120,"H45RWD2");
+    alert(this.upc.client.readHoldingRegisters(41120,1));
+
   }
   
   onContinue(){
