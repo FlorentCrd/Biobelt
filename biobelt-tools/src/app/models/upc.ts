@@ -208,7 +208,8 @@ export class UPC {
         this.client.getFloatFromHoldingRegister(41199),   // co2Res2AuxVol[6]
         this.client.getFloatFromHoldingRegister(41208),   // co2Res2AuxVol[8]
         this.client.getIntFromHoldingRegister(40342,5),   //R1 bottles number
-
+        this.client.getIntFromHoldingRegister(41120,50), //Barcodes of bottles reserve 1
+        this.client.getIntFromHoldingRegister(41170,50), //Barcodes of bottles reserve 2
 
 
 
