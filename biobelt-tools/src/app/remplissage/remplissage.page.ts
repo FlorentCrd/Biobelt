@@ -16,6 +16,7 @@ export class RemplissagePage implements OnInit {
   refillReserve:string;
   refillTotalConsumed:number;
   refillTotalAdded:number;
+  refillTotalAdded2:number;
   refillReplaceAll: boolean;
   refillRealAdded:number;
   start9:string;

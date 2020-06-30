@@ -174,7 +174,7 @@ export class UPCV3 {
       this.alarmsParameters.alrResEmptyFlow = defaultParams.alrResEmptyFlow;
 
       this.alarmsParameters.alrSmsNum1 = defaultParams.alrSmsNum0;
-
+      
       this.communicationParameters.comWiFiName = defaultParams.comWiFiName;
       this.communicationParameters.comWiFiPass = defaultParams.comWiFiPass;
       this.generalParameters.upcLanguage = defaultParams.upcLanguage;

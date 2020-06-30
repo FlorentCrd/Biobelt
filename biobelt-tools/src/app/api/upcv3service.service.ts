@@ -14,6 +14,8 @@ import {BottleType} from '../models/bottleType';
 import { Site } from '../models/site';
 import {Project} from '../models/project/project';
 import { Version } from '../models/project/version';
+import {InterventionV3} from '../models/upcv3/interventionv3';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +52,27 @@ export class Upcv3serviceService {
       return res;
       }
     ))
+  }
+  public createInter(form,token){
+    let headers = new HttpHeaders().set('Content-Type','application/json')
+    .set('authorization','Bearer '+token);
+    //this.apiUrl = "http://localhost:8080/";
+    return this.http.post<ApiResponse<InterventionV3>>(this.apiUrl+'upcv3/intervention',form,{headers:headers}).pipe(map(
+      res =>{
+        
+        switch(res.code){
+          case Code.INTERVENTIONV3_CREATED:
+            res.result = InterventionV3.loadFromJSON(res.result);
+            alert("Intervention créer !");
+            break;
+          case Code.UNAUTHORIZED :
+            alert("Vous n'êtes pas autorisé à utiliser l'application mobile !");
+            break;  
+        }
+        return res;
+      }
+    ))
+
   }
  
   public login(user:User) : Observable<AuthResponse>{

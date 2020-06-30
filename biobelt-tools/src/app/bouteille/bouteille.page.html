@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar color="green">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start"><ion-back-button></ion-back-button></ion-buttons>
-    <ion-title>Installation</ion-title>
+    <ion-title>Intervention</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -34,14 +34,23 @@
           <ion-item (click)="onScanBarCodeB1();">
             <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B1
           </ion-item>
-          <div *ngFor="let b1 of global.B1;let i = index;">
-          <ion-item  *ngIf="global.B1.length > 0">
-            
-            <!-- Added content -->
-          <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
+          <ion-item>
+            <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
           <dt class="col-md-6 mb-2 text-md-right">
             <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded" placeholder="Entrez le total">
           </dt>
+          </ion-item>
+          
+          <div *ngFor="let b1 of global.B1;let i = index;">
+          <ion-item  *ngIf="global.B1.length > 0">
+            <ion-label>{{b1.designation === 0 ? b1.marque: b1.marque+" "+b1.designation.toFixed()+" kg"}}</ion-label>
+            <ion-select placeholder="Designation (en kg)" *ngIf="b1.marque === 'Air liquide'" (ionChange)="setDesignationB1(i,$event);">
+              <ion-select-option value="10">10 kg</ion-select-option>
+              <ion-select-option value="20">20 kg</ion-select-option>
+              <ion-select-option value="22.6796">22,68 kg</ion-select-option>
+              <ion-select-option value="34">34 kg</ion-select-option>
+              
+            </ion-select>
             
             <!--<ion-badge color="primary" slot="end">{{'x'+b1.qty}}</ion-badge>-->
           </ion-item>
@@ -57,6 +66,14 @@
           <ion-item (click)="onScanBarCodeB2();">
             <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B2
           </ion-item>
+          <ion-item>
+            <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
+          <dt class="col-md-6 mb-2 text-md-right">
+            <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded2" (ngModelChange)="refillRealAdded2 = refillReplaceAll ? refillTotalAdded2 - refillTotalConsumed : refillTotalAdded2" placeholder="Entrez le total">
+          </dt>
+          </ion-item>
+          
+          
           <div *ngFor="let b2 of global.B2;let i = index;">
             <ion-item  *ngIf="global.B2.length > 0"> 
               <ion-label>{{b2.designation === 0 ? b2.marque: b2.marque+' '+b2.designation.toFixed()+' kg'}}</ion-label>
@@ -80,6 +97,5 @@
     
   </ion-grid>
   <ion-button size="block" color="primary" (click)="addToBelt();"> Ajouter des bouteilles</ion-button>
-  <ion-button size="block" color="secondary" (click)="onContinue();">Ne pas Ajouter de bouteilles</ion-button>
+  <ion-button size="block" color="secondary" (click)="onContinue();">Ne pas Ajouter des bouteilles</ion-button>
 </ion-content>
-

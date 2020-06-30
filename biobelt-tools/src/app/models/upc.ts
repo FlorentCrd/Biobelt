@@ -197,7 +197,20 @@ export class UPC {
         this.client.getFloatFromHoldingRegister(40165),   // co2Res2ActVol
         this.client.getIntFromHoldingRegister(40167, 1),  // co2Res2ActDur
         this.client.getFloatFromHoldingRegister(40449),   // co2Res2StartVol
-        this.client.getFloatFromHoldingRegister(40354),   // co2Res2AuxVol
+        this.client.getFloatFromHoldingRegister(41119),   // co2Res1AuxVol[0]
+        this.client.getFloatFromHoldingRegister(41129),   // co2Res1AuxVol[2]
+        this.client.getFloatFromHoldingRegister(41139),   // co2Res1AuxVol[4]
+        this.client.getFloatFromHoldingRegister(41149),   // co2Res1AuxVol[6]
+        this.client.getFloatFromHoldingRegister(41159),   // co2Res1AuxVol[8]
+        this.client.getFloatFromHoldingRegister(41169),   // co2Res2AuxVol[0]
+        this.client.getFloatFromHoldingRegister(41179),   // co2Res2AuxVol[2]
+        this.client.getFloatFromHoldingRegister(41189),   // co2Res2AuxVol[4]
+        this.client.getFloatFromHoldingRegister(41199),   // co2Res2AuxVol[6]
+        this.client.getFloatFromHoldingRegister(41208),   // co2Res2AuxVol[8]
+        this.client.getIntFromHoldingRegister(40342,5),   //R1 bottles number
+
+
+
 
         // Alarms setup
         this.client.getIntFromHoldingRegister(40388, 2),      // alrResEmptyTest
