@@ -19,6 +19,8 @@ import { Network } from '@ionic-native/network';
 })
 export class BouteillePage implements OnInit {
   token:string;
+  refillTotalAdded:number;
+  refillTotalAdded2:number;
   listBottles:any;
   sites:Site;
   refillReserve:string;
@@ -26,6 +28,8 @@ export class BouteillePage implements OnInit {
   refillRealAdded2:number;
   private upc: UPC;
   isNotScanned=true;
+  booleanB1=false;
+  booleanB2=false;
   bottle = {
     name : '',
     designation : [],
@@ -44,26 +48,28 @@ export class BouteillePage implements OnInit {
               private platform: Platform, 
               private ngZone: NgZone) {
 
-                this.platform.ready().then(
-                  readySource => {
-                    if (readySource == 'cordova') {
-                      this.upc = new UPC(state => {
-                        this.ngZone.run(() => {
-                          // Force refresh UI
-                        });
-                      });
-            
-                      Network.onConnect().subscribe(() => {
-                        if (Network.type === Network.Connection.WIFI) {
-                          this.upc.reconnect();
-                        }
-                      });
-                    }
-                  }
-                );
+                
                }
 
   async ngOnInit() {
+    // Init UPC
+    this.platform.ready().then(
+      readySource => {
+        if (readySource == 'cordova') {
+          this.upc = new UPC(state => {
+            this.ngZone.run(() => {
+              // Force refresh UI
+            });
+          });
+
+          Network.onConnect().subscribe(() => {
+            if (Network.type === Network.Connection.WIFI) {
+              this.upc.reconnect();
+            }
+          });
+        }
+      }
+    );
     await this.storage.get("bottleType").then(val=>{
         if (val !== null){
           this.listBottles = JSON.parse(val);
@@ -333,23 +339,66 @@ export class BouteillePage implements OnInit {
     
 
   }
-  refill() {
+  async refill() {
     //alert(this.upc.client.floatToRegister(this.refillRealAdded/0.001974));
-   
-    if (this.refillReserve === "1"){
+    const loading = await this.loadingctrl.create({ message: 'Remplissage en cours' });
+    await loading.present();
+    if (this.refillTotalAdded > 0){
       this.upc.client.setFloatInHoldingRegister(40157,this.refillRealAdded/0.001974);
-      alert("Remplissage sur B1 effectué !")
+      //alert("Remplissage sur B1 effectué !")
     }
-    if(this.refillReserve === "2"){
+    if(this.refillTotalAdded2 > 0){
       this.upc.client.setFloatInHoldingRegister(40165,this.refillRealAdded2/0.001974); 
-      alert("Remplissage sur B2 effectué !");
+      //alert("Remplissage sur B2 effectué !");
     }
+   
+
+    var addressage = 41120;
+    
+    for( var i =0 ; i<this.global.B1.length;i++){
+      
+      
+      this.upc.client.setStringInHoldingRegister(addressage,this.global.B1[i]['barcode'].substr(0,8)).then(
+        res=>{
+          this.booleanB1 = true;
+        }
+      ).catch(error=>{
+        alert(JSON.stringify(error));
+      });
+      addressage += 10;
+    }
+
+    var addressage = 41170;
+    for( var i =0 ; i<this.global.B2.length;i++){
+      if(this.global.B2['barcode'].length === 7){
+        this.global.B2['barcode'] += "   ";
+      }
+      this.upc.client.setStringInHoldingRegister(addressage,this.global.B2['barcode']).then(
+        res=>{
+          this.booleanB2 = true;
+        }
+      );
+      addressage += 10;
+    }
+    setInterval(()=> {
+      if(this.booleanB1 && this.booleanB2){
+        loading.dismiss();
+      }
+    },500);
+    
+    
+    
     //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60));
-    this.router.navigate(["move-bouteille"]); 
+    //this.router.navigate(["move-bouteille"]); 
 
-    this.upc.client.setStringInHoldingRegister(41120,"H45RWD2");
-    alert(this.upc.client.readHoldingRegisters(41120,1))  ;
+    
 
+  }
+
+  readRegisterBottles (){
+    this.upc.client.readHoldingRegisters(41120,98).then(res=>{
+      alert(this.upc.client.registerToString(res));
+    })
   }
   
   onContinue(){

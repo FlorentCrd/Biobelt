@@ -57,6 +57,14 @@ export class RemplissagePage implements OnInit {
       this.upc.client.setFloatInHoldingRegister(40165,this.refillRealAdded/0.001974); 
       alert("Remplissage sur B2 effectué !");
     }
+    /*this.upc.client.setStringInHoldingRegister(41120,"H45RWD2");
+    
+    this.upc.client.readHoldingRegisters(41120,5).then(res=>{
+      alert(this.upc.client.registerToString(res));
+    })
+    .catch(error =>{
+      alert(JSON.stringify(error));
+    })*/
     //this.upc.client.setIntInHoldingRegister(40120,2,(new Date(this.start9).getHours()*3600)+(new Date(this.start9).getMinutes()*60));
     this.router.navigate(["move-bouteille"]); 
   }
