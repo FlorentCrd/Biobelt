@@ -361,7 +361,7 @@ export class BouteillePage implements OnInit {
       this.upc.client.setStringInHoldingRegister(addressage,this.global.B1[i]['barcode'].substr(0,8)).then(
         res=>{
           this.booleanB1 = true;
-        }
+        }    
       ).catch(error=>{
         alert(JSON.stringify(error));
       });
