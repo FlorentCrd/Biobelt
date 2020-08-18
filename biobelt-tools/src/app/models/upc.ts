@@ -183,7 +183,7 @@ export class UPC {
         this.client.getIntFromHoldingRegister(40419, 2),  // co2ResInactPrev
         this.client.getIntFromHoldingRegister(40382, 1),  // co2ResType
         this.client.getIntFromHoldingRegister(40381, 1),  // co2Res1Status
-        this.client.getFloatFromHoldingRegister(40384),   // co2Res1FillNew
+        this.client.getFloatFromHoldingRegister(40384),   // co2Res1FillNew 
         this.client.getFloatFromHoldingRegister(40153),   // co2Res1FillVol
         this.client.getIntFromHoldingRegister(40155, 2),  // co2Res1FillTime
         this.client.getFloatFromHoldingRegister(40157),   // co2Res1ActVol

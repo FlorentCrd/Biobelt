@@ -409,3 +409,5 @@ export class BouteillePage implements OnInit {
         this.router.navigate(["removebottle"]);
   }
 }
+
+

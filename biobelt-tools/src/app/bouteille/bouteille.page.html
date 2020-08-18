@@ -7,40 +7,36 @@
 </ion-header>
 
 <ion-content>
-  <h1 style="text-align: center;">Ajouter des bouteilles</h1>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" style="border-right: solid 3px green;">
+      <ion-col size="12" >
         <!--<ion-select placeholder="Type de bouteilles">
           <ion-select-option *ngFor="let bottle of listBottles">
             {{bottle.brand+" "+bottle.designation.toFixed(2)+" kg"}}
           </ion-select-option>
         </ion-select>-->
-      <h1 style="text-align: center;">
+      <h1 > 
         B1
       </h1>
       
       </ion-col>
       
-      <ion-col size="6">
-        <h1 style="text-align: center;">
-          B2
-        </h1>  
-      </ion-col>
+      
     </ion-row>
     
     <ion-row>
-      <ion-col size="6" style="border-right: solid 3px green;">
+      <ion-col size="12" > <!-- border-bottoms   -->
         <ion-list>
-          <ion-item (click)="onScanBarCodeB1();">
-            <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B1
+          <ion-item (click)="onScanBarCodeB1();">            
+            <ion-icon color="success" name="add-circle" slot="start" ></ion-icon>             
+            <ion-icon color="danger" name="close-circle" slot="end" > </ion-icon>  
           </ion-item>
-          <ion-item>
+         <!--  <ion-item>
             <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
           <dt class="col-md-6 mb-2 text-md-right">
             <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded" (ngModelChange)="refillRealAdded = refillReplaceAll ? refillTotalAdded - refillTotalConsumed : refillTotalAdded" placeholder="Entrez le total">
           </dt>
-          </ion-item>
+          </ion-item> -->
           
           <div *ngFor="let b1 of global.B1;let i = index;">
           <ion-item  *ngIf="global.B1.length > 0">
@@ -58,21 +54,35 @@
         </div>
         
         </ion-list>
+        
         <ion-button color="danger" (click)="deleteB1();" size="block">
           Tout Effacer
         </ion-button>
       </ion-col>
-      <ion-col size="6">
+      
+      <ion-col size="12">
+        <br/>
+       
+          <div style="border-bottom: solid 3px green;"> </div>
+          <br/>
+        <h1>
+          B2
+        </h1>  
+      </ion-col>
+      <ion-col size="12">
         <ion-list>
           <ion-item (click)="onScanBarCodeB2();">
-            <ion-icon color="primary" name="add-circle"></ion-icon>  Ajouter une Bouteille à B2
+            <ion-icon color="success" name="add-circle" slot="start" ></ion-icon>  
+            
+            <ion-icon color="danger" name="close-circle" slot="end" > </ion-icon>  
+
           </ion-item>
-          <ion-item>
+         <!--  <ion-item>
             <dd class="col-md-6 mb-0">Total ajouté [kg]</dd>
           <dt class="col-md-6 mb-2 text-md-right">
             <input type="number" class="form-control form-control-sm" [(ngModel)]="refillTotalAdded2" (ngModelChange)="refillRealAdded2 = refillReplaceAll ? refillTotalAdded2 - refillTotalConsumed : refillTotalAdded2" placeholder="Entrez le total">
           </dt>
-          </ion-item>
+          </ion-item> -->
           
           
           <div *ngFor="let b2 of global.B2;let i = index;">
@@ -99,68 +109,5 @@
   </ion-grid>
   <ion-button size="block" color="primary" (click)="refill();">synchroniser avec l'upc</ion-button>
 </ion-content>
-<ion-content>
-  <h1 style="text-align: center;">Enlever des bouteilles</h1>
-  <ion-grid>
-    <ion-row>
-      <ion-col size="6" style="border-right: solid 3px green;">
-        <!--<ion-select placeholder="Type de bouteilles">
-          <ion-select-option *ngFor="let bottle of listBottles">
-            {{bottle.brand+" "+bottle.designation.toFixed(2)+" kg"}}
-          </ion-select-option>
-        </ion-select>-->
-      <h1 style="text-align: center;">
-        B1
-      </h1>
-      
-      </ion-col>
-      
-      <ion-col size="6">
-        <h1 style="text-align: center;">
-          B2
-        </h1>  
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="6" style="border-right: solid 3px green;">
-        <ion-list>
-          <ion-item (click)="onScanBarCodeB1();">
-            <ion-icon color="primary" name="add-circle"></ion-icon>  Enlever une Bouteille à B1
-          </ion-item>
-          <div *ngFor="let b1 of global.B1;let i = index;">
-          <ion-item  *ngIf="global.B1.length > 0">
-            <ion-label>{{b1.designation === 0 ? b1.marque: b1.marque+" "+b1.designation.toFixed()+" kg"}}</ion-label>
-            
-            
-            <!--<ion-badge color="primary" slot="end">{{'x'+b1.qty}}</ion-badge>-->
-          </ion-item>
-        </div>
-        
-        </ion-list>
-        <ion-button color="danger" (click)="deleteB1();" size="block">
-          Tout Effacer
-        </ion-button>
-      </ion-col>
-      <ion-col size="6">
-        <ion-list>
-          <ion-item (click)="onScanBarCodeB2();">
-            <ion-icon color="primary" name="add-circle"></ion-icon>  Enlever une Bouteille à B2
-          </ion-item>
-          <div *ngFor="let b2 of global.B2;let i = index;">
-            <ion-item  *ngIf="global.B2.length > 0"> 
-              <ion-label>{{b2.designation === 0 ? b2.marque: b2.marque+' '+b2.designation.toFixed()+' kg'}}</ion-label>
-              
-                
-              <!--<ion-badge color="primary">{{'x'+b2.qty}}</ion-badge>-->
-            </ion-item>
-          </div>
-        </ion-list>
-        <ion-button color="danger" (click)="deleteB2();" size="block">
-          Tout Effacer
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-button size="block" color="primary" (click)="addToBelt();"> synchroniser avec l'upc </ion-button>
-</ion-content>
+
 
