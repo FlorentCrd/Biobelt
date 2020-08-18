@@ -357,19 +357,23 @@ export class BouteillePage implements OnInit {
     
     for( var i =0 ; i<this.global.B1.length;i++){
       
+      setTimeout(()=>{
+        this.upc.client.setStringInHoldingRegister(addressage,this.global.B1[i]['barcode'].substr(0,8)).then(
+          res=>{
+            this.booleanB1 = true;
+            addressage += 10;
+            alert("Ecriture sur l'upc en B1, état : "+JSON.stringify(res));
+          }    
+        ).catch(error=>{
+          alert(JSON.stringify(error));
+        });
+      },1000)
       
-      this.upc.client.setStringInHoldingRegister(addressage,this.global.B1[i]['barcode'].substr(0,8)).then(
-        res=>{
-          this.booleanB1 = true;
-        }    
-      ).catch(error=>{
-        alert(JSON.stringify(error));
-      });
-      addressage += 10;
+      
     }
 
-    var addressage = 41170;
-    for( var i =0 ; i<this.global.B2.length;i++){
+    //var addressage = 41170;
+    /*for( var i =0 ; i<this.global.B2.length;i++){
       if(this.global.B2['barcode'].length === 7){
         this.global.B2['barcode'] += "   ";
       }
@@ -379,9 +383,9 @@ export class BouteillePage implements OnInit {
         }
       );
       addressage += 10;
-    }
+    }*/
     setInterval(()=> {
-      if(this.booleanB1 && this.booleanB2){
+      if(this.booleanB1){
         loading.dismiss();
       }
     },500);
@@ -398,6 +402,8 @@ export class BouteillePage implements OnInit {
   readRegisterBottles (){
     this.upc.client.readHoldingRegisters(41120,98).then(res=>{
       alert(this.upc.client.registerToString(res));
+    }).catch(error=>{
+      alert(JSON.stringify(error));
     })
   }
   
