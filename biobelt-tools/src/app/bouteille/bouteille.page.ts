@@ -19,6 +19,10 @@ import { Network } from '@ionic-native/network';
 })
 export class BouteillePage implements OnInit {
   token:string;
+  i = 0;
+  y = 0;
+  addressage = 41119;
+  addressage2 = 41169;
   refillTotalAdded:number;
   refillTotalAdded2:number;
   listBottles:any;
@@ -343,36 +347,53 @@ export class BouteillePage implements OnInit {
     //alert(this.upc.client.floatToRegister(this.refillRealAdded/0.001974));
     const loading = await this.loadingctrl.create({ message: 'Remplissage en cours' });
     await loading.present();
-    if (this.refillTotalAdded > 0){
+    /*if (this.refillTotalAdded > 0){
       this.upc.client.setFloatInHoldingRegister(40157,this.refillRealAdded/0.001974);
       //alert("Remplissage sur B1 effectué !")
     }
     if(this.refillTotalAdded2 > 0){
       this.upc.client.setFloatInHoldingRegister(40165,this.refillRealAdded2/0.001974); 
       //alert("Remplissage sur B2 effectué !");
-    }
+    }*/
    
 
-    var addressage = 41120;
     
-    for( var i =0 ; i<this.global.B1.length;i++){
+    
+    alert(this.global.B1[this.i]['barcode'])
+    alert(this.global.B2[this.y]['barcode'])
+    //for( var i =0 ; i<this.global.B1.length;i++){
       
       setTimeout(()=>{
-        this.upc.client.setStringInHoldingRegister(addressage,this.global.B1[i]['barcode'].substr(0,8)).then(
+        
+        this.upc.client.setStringInHoldingRegister(this.addressage,this.global.B1[this.i]['barcode'].substr(0,8)).then(
           res=>{
             this.booleanB1 = true;
-            addressage += 10;
+            this.addressage += 10;
+            this.i++;
             alert("Ecriture sur l'upc en B1, état : "+JSON.stringify(res));
           }    
         ).catch(error=>{
           alert(JSON.stringify(error));
         });
+
+        this.upc.client.setStringInHoldingRegister(this.addressage2,this.global.B2[this.y]['barcode'].substr(0,8)).then(
+          res=>{
+            this.booleanB2 = true;
+            this.addressage2 += 10;
+            this.y++;
+            alert("Ecriture sur l'upc en B2, état : "+JSON.stringify(res));
+          }    
+        ).catch(error=>{
+          alert(JSON.stringify(error));
+        });
+
+
       },1000)
       
       
-    }
+    //}
 
-    //var addressage = 41170;
+    
     /*for( var i =0 ; i<this.global.B2.length;i++){
       if(this.global.B2['barcode'].length === 7){
         this.global.B2['barcode'] += "   ";
@@ -384,6 +405,8 @@ export class BouteillePage implements OnInit {
       );
       addressage += 10;
     }*/
+
+
     setInterval(()=> {
       if(this.booleanB1){
         loading.dismiss();
@@ -400,7 +423,7 @@ export class BouteillePage implements OnInit {
   }
 
   readRegisterBottles (){
-    this.upc.client.readHoldingRegisters(41120,98).then(res=>{
+    this.upc.client.readHoldingRegisters(41119,98).then(res=>{
       alert(this.upc.client.registerToString(res));
     }).catch(error=>{
       alert(JSON.stringify(error));
